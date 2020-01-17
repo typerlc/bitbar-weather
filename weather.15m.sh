@@ -6,7 +6,7 @@
 # <bitbar.author.github>typerlc</bitbar.author.github>
 # <bitbar.desc>Display local weather collected using darksky-weather (install from brew).</bitbar.desc>
 # <bitbar.dependencies>darksky-weather,curl,jq</bitbar.dependencies>
-# <bitbar.image></bitbar.image>
+# <bitbar.image>https://github.com/typerlc/bitbar-weather/raw/master/weather_preview.png</bitbar.image>
 
 [ -f $0.location ] && . $0.location
 
