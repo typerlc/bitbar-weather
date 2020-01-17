@@ -15,14 +15,11 @@ LOCATION='Some Location, Somewhere'
 You could also have some automated mapping based on IP addresses e.g.
 
 ```
-map_ip_to_location() {
-    IP=$(curl -s https://ifconfig.co/)
-    case "$IP" in
-        a.b.c.d) echo 'Some Location, Somewhere' ;;
-        *) ;;
-    esac
-}
-LOCATION=$(map_ip_to_location)
+IP=$(curl -s https://ifconfig.co/)
+case "$IP" in
+    1.2.3.4) LOCATION="Some Location, Somewhere" ;;
+    6.7.8.9) LOCATION="Somewhere Else" ;;
+esac
 ```
 
 If $LOCATION is not set or empty, then your location will be automatically determined.
