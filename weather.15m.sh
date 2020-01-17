@@ -6,6 +6,7 @@
 # <bitbar.author.github>typerlc</bitbar.author.github>
 # <bitbar.desc>Display local weather collected using darksky-weather (install from brew).</bitbar.desc>
 # <bitbar.dependencies>darksky-weather,curl,jq</bitbar.dependencies>
+# <bitbar.abouturl>https://github.com/typerlc/bitbar-weather/</bitbar.abouturl>
 # <bitbar.image>https://github.com/typerlc/bitbar-weather/raw/master/weather_preview.png</bitbar.image>
 
 [ -f $0.location ] && . $0.location
@@ -29,7 +30,7 @@ print_temperature() {
     temperature=$1
     units=$2
     case $units in
-        celsius|si) unit_string=C ;;
+        celsius|si|ca|uk) unit_string=C ;;
         fahrenheit|us) unit_string=F ;;
         *) unit_string=C ;;
     esac
@@ -42,10 +43,14 @@ export PATH="/usr/local/bin:${PATH}"
 [ -n "$LOCATION" ] && LOCATION_OPT=-l
 
 WEATHER_DATA="$(weather -json $LOCATION_OPT "$LOCATION")"
+
+LATITUDE=$(echo $WEATHER_DATA | jq -r '.latitude')
+LONGITUDE=$(echo $WEATHER_DATA | jq -r '.longitude')
+UNITS=$(echo $WEATHER_DATA | jq -r '.flags.units')
+
 NOW_ALERTS=$(echo $WEATHER_DATA | jq -r '.alerts')
 NOW_SUMMARY=$(echo $WEATHER_DATA | jq -r '.currently.summary')
 NOW_TEMP=$(echo $WEATHER_DATA | jq -r '.currently.temperature')
-UNITS=$(echo $WEATHER_DATA | jq -r '.flags.units')
 NOW_ICON=$(echo $WEATHER_DATA | jq -r '.currently.icon')
 NOW_HUMIDITY=$(echo $WEATHER_DATA | jq -r '.currently.humidity')
 NOW_PRECIP_TYPE=$(echo $WEATHER_DATA | jq -r '.currently.precipType')
@@ -58,5 +63,7 @@ FORECAST_ICON=$(echo $WEATHER_DATA | jq -r '.daily.icon')
 echo "$(print_weather_icon $NOW_ICON)   $(print_temperature $NOW_TEMP $UNITS)"
 echo "---"
 weather --hide-icon $LOCATION_OPT "$LOCATION" | sed 's/$/| trim=false/' | sed '/Rain chance:/{s/$/ font=Courier/;n;s/$/ font=Courier/;}'
+echo "---"
+echo "View details on web ...|href=https://darksky.net/forecast/$LATITUDE,$LONGITUDE/${UNITS}12"
 echo "---"
 echo "Refresh... | refresh=true"
