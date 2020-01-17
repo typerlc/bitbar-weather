@@ -57,6 +57,6 @@ FORECAST_ICON=$(echo $WEATHER_DATA | jq -r '.daily.icon')
 
 echo "$(print_weather_icon $NOW_ICON)   $(print_temperature $NOW_TEMP $UNITS)"
 echo "---"
-weather --hide-icon $LOCATION_OPT "$LOCATION"
+weather --hide-icon $LOCATION_OPT "$LOCATION" | sed 's/$/| trim=false/' | sed '/Rain chance:/{s/$/ font=Courier/;n;s/$/ font=Courier/;}'
 echo "---"
 echo "Refresh... | refresh=true"
