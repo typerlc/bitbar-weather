@@ -6,7 +6,7 @@ Requires jq, curl, darksky-weather to be installed in the PATH or /usr/local/bin
 
 ## Overriding location
 
-You can create a shell script in the bitbar plugins with the same name as this plugin, with '.location' appended to it.  This will get loaded by the plugin on start.  To force a different location, set the LOCATION variable with the name of your location.
+You can create a shell script in the bitbar plugins with the same name as this plugin, with a '.' prefix and '.location' appended to it.  This will get loaded by the plugin on start.  To force a different location, set the LOCATION variable with the name of your location.
 
 ```
 LOCATION='Some Location, Somewhere'

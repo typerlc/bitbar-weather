@@ -10,7 +10,7 @@
 # <bitbar.image>https://github.com/typerlc/bitbar-weather/raw/master/weather_preview.png</bitbar.image>
 
 # shellcheck source=/dev/null
-[ -f "$0".location ] && . "$0".location
+[ -f ."$0".location ] && . ."$0".location
 
 print_weather_icon() {
     case $1 in
